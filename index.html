@@ -11,14 +11,19 @@
   <body>
     <div class="ctrl_div">
       <div id="input-group">
-        <label class="github"
-          ><a href="https://github.com/kxkx5150/Sega-Master-System"
+		<a href="roms/astro_hunter-0.2.sms" class="downloadROM button">
+			Download the ROM
+		</a>
+
+        <label>
+		  Emulator used:
+		  <a href="https://github.com/kxkx5150/Sega-Master-System"
             >https://github.com/kxkx5150/Sega-Master-System</a
-          ></label
-        >
+          >
+		</label>
         <span id="gamepad_info"></span><img src="./img/options.png" id="setteings" />
         <input type="file" name="file" id="fileInput" class="inputfile" />
-        <label for="fileInput" class="button">Choose a file</label>
+        <label for="fileInput" class="button" style="display: none">Choose a file</label>
         <input type="range" id="speed" name="speed" min="1" max="7" step="1" value="4"style="display: none" />
         <label for="speed" style="padding-right: 18px;display: none">Speed</label>
         <button id="pauseButton" class="button" style="display: none">Pause/Play</button>
@@ -89,5 +94,22 @@
     <script type="text/javascript" src="./js/ms/gamepad.js"></script>
     <script type="text/javascript" src="./js/ms/main.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
+	<script type="text/javascript">
+		const ROM_TO_LOAD = 'roms/astro_hunter-0.2.sms';
+	
+		document.addEventListener("DOMContentLoaded", function(event) { 
+			fetch(ROM_TO_LOAD)
+			.then(response => response.blob())
+			.then((blob) => {
+				console.info('Blob', blob);
+
+				const fileReader = new FileReader();
+				fileReader.onload = (e) => {
+					segams.loadRom(e.target.result);
+				};
+				fileReader.readAsBinaryString(blob);
+			});			
+		});
+	</script>
   </body>
 </html>
